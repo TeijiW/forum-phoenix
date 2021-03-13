@@ -1,9 +1,6 @@
 defmodule Forum do
-  @moduledoc """
-  Forum keeps the contexts that define your domain
-  and business logic.
+  alias Forum.Thread
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
-  """
+  defdelegate create_thread(params), to: Thread.Create, as: :call
+  defdelegate get_threads(), to: Thread.Index, as: :call
 end

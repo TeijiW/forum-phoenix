@@ -1,0 +1,16 @@
+<h1> Threads </h1>
+
+<button>
+<%= link to: Routes.thread_path(@conn, :new), class: "btn" do%>
+    New Thread
+    <% end %>
+</a>
+</button>
+
+<ul>
+    <%= for thread <- @threads do %>
+        <li>
+            <%= thread.title %>
+        </li>
+    <% end %>
+</ul>

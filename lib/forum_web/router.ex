@@ -16,7 +16,9 @@ defmodule ForumWeb.Router do
   scope "/", ForumWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", ThreadController, :index
+    get "/thread/new", ThreadController, :new
+    post "/thread", ThreadController, :create
   end
 
   # Other scopes may use custom stacks.
