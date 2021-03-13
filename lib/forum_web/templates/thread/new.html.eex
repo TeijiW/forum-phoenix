@@ -8,4 +8,10 @@
     </div>
 
     <%= submit "Save Thread", class: "btn" %>
+<button>
+<%= link to: Routes.thread_path(@conn, :index), class: "btn" do%>
+    Cancel
+    <% end %>
+</a>
+</button>
 <% end %>
