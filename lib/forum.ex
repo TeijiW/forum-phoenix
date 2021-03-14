@@ -1,6 +1,9 @@
 defmodule Forum do
-  alias Forum.Thread
+  alias Forum.{Thread, Comment}
 
   defdelegate create_thread(params), to: Thread.Create, as: :call
   defdelegate get_threads(), to: Thread.Index, as: :call
+  defdelegate fetch_thread(thread_id), to: Thread.Fetch, as: :call
+
+  defdelegate create_comment(params), to: Comment.Create, as: :call
 end

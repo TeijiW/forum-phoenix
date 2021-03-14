@@ -2,11 +2,14 @@ defmodule Forum.Thread do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Forum.Comment
+
   @primary_key {:id, Ecto.UUID, autogenerate: true}
 
   schema "thread" do
     field :title, :string
     field :description, :string
+    has_many(:comment, Comment)
     timestamps()
   end
 

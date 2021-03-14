@@ -1,0 +1,19 @@
+<h1>
+<%= @thread.title %>
+</h1>
+<h2>
+<%= @thread.description %>
+</h2>
+
+
+<%= form_for @changeset, Routes.thread_comment_path(@conn, :create, @thread_id), fn f -> %>
+    <div class="form-group">
+        <%= text_input f, :username, placeholder: "Username", class: "form-control" %>
+        <%= error_tag f, :username %>
+
+        <%= text_input f, :message, placeholder: "Message", class: "form-control" %>
+        <%= error_tag f, :message %>
+    </div>
+
+    <%= submit "Save Message", class: "btn" %>
+<% end %>
