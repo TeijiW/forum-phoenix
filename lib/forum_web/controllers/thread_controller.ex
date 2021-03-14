@@ -27,8 +27,6 @@ defmodule ForumWeb.ThreadController do
 
     changeset = Comment.changeset(%{})
 
-    IO.inspect(Repo.preload(thread, :comments))
-
     render(conn, "show.html",
       thread: Repo.preload(thread, :comments),
       changeset: changeset,

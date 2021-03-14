@@ -25,6 +25,7 @@ defmodule Forum.Comment do
   def changeset(params) do
     %__MODULE__{}
     |> cast(params, @required_params)
+    |> cast_assoc(:thread)
     |> foreign_key_constraint(:thread_id)
     |> validate_required(@required_params)
     |> validate_length(:username, max: 255)
