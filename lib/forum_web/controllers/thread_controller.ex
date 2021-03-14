@@ -1,6 +1,6 @@
 defmodule ForumWeb.ThreadController do
   use ForumWeb, :controller
-  alias Forum.{Thread, Comment}
+  alias Forum.{Thread, Comment, Repo}
 
   def new(conn, _params) do
     changeset = Thread.changeset(%Thread{}, %{})
@@ -26,9 +26,14 @@ defmodule ForumWeb.ThreadController do
       |> Forum.fetch_thread()
 
     changeset = Comment.changeset(%{})
-    # IO.inspect(changeset)
 
-    render(conn, "show.html", thread: thread, changeset: changeset, thread_id: thread_id)
+    IO.inspect(Repo.preload(thread, :comments))
+
+    render(conn, "show.html",
+      thread: Repo.preload(thread, :comments),
+      changeset: changeset,
+      thread_id: thread_id
+    )
   end
 
   defp handle_form_response({:ok, _thread}, conn, _view) do

@@ -2,8 +2,6 @@ defmodule ForumWeb.CommentController do
   use ForumWeb, :controller
 
   def create(conn, params) do
-    IO.inspect(params)
-
     %{"comment" => %{"message" => message, "username" => username}, "thread_id" => thread_id} =
       params
 

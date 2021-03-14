@@ -5,6 +5,14 @@
 <%= @thread.description %>
 </h2>
 
+<ul>
+    <%= for comment <- @thread.comments do %>
+        <li>
+            <%= comment.message %> - <%= comment.username %>
+        </li>
+    <% end %>
+</ul>
+
 
 <%= form_for @changeset, Routes.thread_comment_path(@conn, :create, @thread_id), fn f -> %>
     <div class="form-group">

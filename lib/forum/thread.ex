@@ -9,7 +9,7 @@ defmodule Forum.Thread do
   schema "thread" do
     field :title, :string
     field :description, :string
-    has_many(:comment, Comment)
+    has_many(:comments, Comment)
     timestamps()
   end
 
