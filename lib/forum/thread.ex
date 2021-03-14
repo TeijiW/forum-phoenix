@@ -4,8 +4,6 @@ defmodule Forum.Thread do
 
   alias Forum.Comment
 
-  @primary_key {:id, Ecto.UUID, autogenerate: true}
-
   schema "thread" do
     field :username, :string
     field :title, :string
