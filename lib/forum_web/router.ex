@@ -21,7 +21,7 @@ defmodule ForumWeb.Router do
     post "/thread", ThreadController, :create
 
     resources "/thread", ThreadController, only: [:show] do
-      resources "", CommentController, only: [:create]
+      resources "/", CommentController, only: [:create]
     end
   end
 

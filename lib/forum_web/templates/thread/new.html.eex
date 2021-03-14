@@ -5,6 +5,9 @@
 
         <%= text_input f, :description, placeholder: "Description", class: "form-control" %>
         <%= error_tag f, :description %>
+
+        <%= text_input f, :username, placeholder: "Your name", class: "form-control" %>
+        <%= error_tag f, :username %>
     </div>
 
     <%= submit "Save Thread", class: "btn" %>
