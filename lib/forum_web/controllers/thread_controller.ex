@@ -21,17 +21,25 @@ defmodule ForumWeb.ThreadController do
   end
 
   def show(conn, %{"id" => thread_id}) do
-    {:ok, thread = %Thread{}} =
-      thread_id
-      |> Forum.fetch_thread()
-
     changeset = Comment.changeset(%{})
 
+    thread_id
+    |> Forum.fetch_thread()
+    |> handle_show(conn, changeset)
+  end
+
+  defp handle_show({:ok, thread}, conn, changeset) do
     render(conn, "show.html",
       thread: Repo.preload(thread, :comments),
       changeset: changeset,
-      thread_id: thread_id
+      thread_id: thread.id
     )
+  end
+
+  defp handle_show({:error, message}, conn, _changeset) do
+    conn
+    |> put_flash(:error, message)
+    |> redirect(to: Routes.thread_path(conn, :index))
   end
 
   defp handle_form_response({:ok, _thread}, conn, _view) do
