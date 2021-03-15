@@ -28,5 +28,6 @@ defmodule Forum.Comment do
     |> foreign_key_constraint(:thread_id)
     |> validate_required(@required_params)
     |> validate_length(:username, max: 255)
+    |> validate_length(:message, min: 3)
   end
 end

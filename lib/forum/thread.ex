@@ -26,7 +26,8 @@ defmodule Forum.Thread do
     thread_or_module
     |> cast(params, @required_params)
     |> validate_required(@required_params)
-    |> validate_length(:title, max: 255)
-    |> validate_length(:username, max: 255)
+    |> validate_length(:title, min: 3, max: 255)
+    |> validate_length(:description, min: 3)
+    |> validate_length(:username, min: 3, max: 255)
   end
 end

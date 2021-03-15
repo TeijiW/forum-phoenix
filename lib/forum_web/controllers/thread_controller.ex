@@ -6,7 +6,9 @@ defmodule ForumWeb.ThreadController do
     changeset = Thread.changeset(%Thread{}, %{})
 
     conn
-    |> render("new.html", changeset: changeset)
+    |> render("new.html",
+      changeset: changeset
+    )
   end
 
   def index(conn, _params) do
