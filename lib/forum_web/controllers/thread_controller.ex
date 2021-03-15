@@ -15,57 +15,35 @@ defmodule ForumWeb.ThreadController do
   end
 
   def create(conn, %{"thread" => thread}) do
-    thread
-    |> Forum.create_thread()
-    |> handle_form_response(conn, "new.html")
+    case Forum.create_thread(thread) do
+      {:error, changeset} -> render(conn, "new.html", changeset: changeset)
+      {:ok, _thread} -> redirect_flash_index(conn, "Thread created")
+    end
   end
 
   def show(conn, %{"id" => thread_id}) do
     changeset = Comment.changeset(%{})
 
-    thread_id
-    |> Forum.fetch_thread()
-    |> handle_show(conn, changeset)
+    case Forum.fetch_thread(thread_id) do
+      {:ok, thread} ->
+        render(conn, "show.html",
+          thread: Repo.preload(thread, :comments),
+          changeset: changeset,
+          thread_id: thread.id
+        )
+
+      {:error, message} ->
+        redirect_flash_index(conn, message, :error)
+    end
   end
 
   def delete(conn, %{"id" => thread_id}) do
-    thread_id
-    |> Forum.delete_thread()
-    |> handle_delete(conn)
+    case Forum.delete_thread(thread_id) do
+      {:ok, _thread} -> redirect_flash_index(conn, "The thread has been deleted")
+      {:error, message} -> redirect_flash_index(conn, message, :error)
+    end
   end
 
-  defp handle_delete({:ok, _thread}, conn) do
-    conn
-    |> put_flash(:info, "The thread has been deleted")
-    |> redirect(to: Routes.thread_path(conn, :index))
-  end
-
-  defp handle_delete({:error, message}, conn) do
-    conn
-    |> put_flash(:error, message)
-    |> redirect(to: Routes.thread_path(conn, :index))
-  end
-
-  defp handle_show({:ok, thread}, conn, changeset) do
-    render(conn, "show.html",
-      thread: Repo.preload(thread, :comments),
-      changeset: changeset,
-      thread_id: thread.id
-    )
-  end
-
-  defp handle_show({:error, message}, conn, _changeset) do
-    conn
-    |> put_flash(:error, message)
-    |> redirect(to: Routes.thread_path(conn, :index))
-  end
-
-  defp handle_form_response({:ok, _thread}, conn, _view) do
-    conn
-    |> put_flash(:info, "Thread created")
-    |> redirect(to: Routes.thread_path(conn, :index))
-  end
-
-  defp handle_form_response({:error, thread} = _error, conn, view),
-    do: render(conn, view, changeset: thread)
+  defp redirect_flash_index(conn, message, flash_type \\ :info, path \\ :index),
+    do: conn |> put_flash(flash_type, message) |> redirect(to: Routes.thread_path(conn, path))
 end
