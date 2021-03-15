@@ -11,7 +11,7 @@
     <%= for thread <- @threads do %>
         <li>
         <%= link to: Routes.thread_path(@conn, :show, thread.id) do%>
-            <%= thread.title %>
+            <%= thread.title %> - <%= link "Delete", to: Routes.thread_path(@conn, :delete, thread), method: :delete%>
         <% end %>
         </a>
         </li>

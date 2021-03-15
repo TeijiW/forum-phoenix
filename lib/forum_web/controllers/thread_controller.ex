@@ -28,6 +28,24 @@ defmodule ForumWeb.ThreadController do
     |> handle_show(conn, changeset)
   end
 
+  def delete(conn, %{"id" => thread_id}) do
+    thread_id
+    |> Forum.delete_thread()
+    |> handle_delete(conn)
+  end
+
+  defp handle_delete({:ok, _thread}, conn) do
+    conn
+    |> put_flash(:info, "The thread has been deleted")
+    |> redirect(to: Routes.thread_path(conn, :index))
+  end
+
+  defp handle_delete({:error, message}, conn) do
+    conn
+    |> put_flash(:error, message)
+    |> redirect(to: Routes.thread_path(conn, :index))
+  end
+
   defp handle_show({:ok, thread}, conn, changeset) do
     render(conn, "show.html",
       thread: Repo.preload(thread, :comments),

@@ -18,9 +18,8 @@ defmodule ForumWeb.Router do
 
     get "/", ThreadController, :index
     get "/thread/new", ThreadController, :new
-    post "/thread", ThreadController, :create
 
-    resources "/thread", ThreadController, only: [:show] do
+    resources "/thread", ThreadController, only: [:show, :create, :delete] do
       resources "/", CommentController, only: [:create]
     end
   end
