@@ -21,9 +21,18 @@ defmodule ForumWeb.ThreadControllerTest do
   describe "Create thread" do
     test "Redirects to thread list when data is valid", %{conn: conn} do
       conn = post(conn, Routes.thread_path(conn, :create), thread: @create_attrs)
-      # assert html_response(conn, 302) =~ "Threads"
-      # assert %{id: id} = redirected_params(conn)
-      # assert redirected_to(conn) == Routes.thread_path(conn, :show, id)
+      assert %{id: id} = redirected_params(conn)
+      assert redirected_to(conn) == Routes.thread_path(conn, :show, id)
+
+      get(conn, Routes.thread_path(conn, :show, id))
+      |> html_response(200)
+      |> assert() =~ id
+    end
+
+    test "Show errors when data is invalid", %{conn: conn} do
+      post(conn, Routes.thread_path(conn, :create), thread: @invalid_attrs)
+      |> html_response(200)
+      |> assert() =~ "new thread"
     end
   end
 end
