@@ -20,6 +20,11 @@
         <%= if get_flash(@conn, :error) do%>
           <p class="bg-red-100 border-2 border-red-300 text-red-500 text-center w-1/3 rounded-md px-2 py-2 absolute top-2 right-0" role="alert"><%= get_flash(@conn, :error) %></p>
         <% end %>
+        <%= if assigns[:show_thread_list_button] || false do%>
+          <%= link "< Back to threads list", to: Routes.thread_path(@conn, :index),
+          class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md px-1
+          h-8 text-center pt-0.5 absolute top-2 left-0", method: :get %>
+        <% end %>
         <p><h1 class="text-6xl text-center">Forum</h1></p>
       </header>
       <%= @inner_content %>

@@ -31,7 +31,8 @@ defmodule ForumWeb.ThreadController do
         render(conn, "show.html",
           thread: Repo.preload(thread, :comments),
           changeset: changeset,
-          thread_id: thread.id
+          thread_id: thread.id,
+          show_thread_list_button: true
         )
 
       {:error, message} ->
