@@ -1,8 +1,6 @@
 <section class="flex justify-between w-full mt-4">
     <h2 class="text-4xl font-bold"> Threads </h2>
-    <%= link to: Routes.thread_path(@conn, :new), class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-32 text-center pt-1 text-lg" do%>
-        New Thread
-    <% end %>
+    <%= link "New Thread", to: Routes.thread_path(@conn, :new), class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-32 text-center pt-1 text-lg" %>
 </section>
 
 

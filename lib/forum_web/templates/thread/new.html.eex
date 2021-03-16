@@ -17,9 +17,7 @@
         </section>
         <section class="w-full flex justify-end">
             <%= submit "Save Thread", class: "bg-green-200 hover:bg-green-300 border-2 border-black rounded-md w-32 mx-2 mb-4 mt-0 h-8" %>
-            <%= link to: Routes.thread_path(@conn, :index), class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-24 ml-2 mb-4 mt-0 h-8 text-center pt-0.5", method: :get do%>
-                Cancel
-                <% end %>
+            <%= link "Cancel", to: Routes.thread_path(@conn, :index), class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-24 ml-2 mb-4 mt-0 h-8 text-center pt-0.5", method: :get %>
         </section>
     </section>
 

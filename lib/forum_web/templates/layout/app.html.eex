@@ -13,7 +13,7 @@
   </head>
   <body>
     <main role="main" class="px-96 mt-8 flex flex-col justify-center">
-    <header>
+    <header class="mb-8">
         <h1 class="text-6xl text-center">Forum</h1>
     </header>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
