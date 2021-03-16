@@ -1,20 +1,11 @@
 # Forum
 
-To start your Phoenix server:
+Steps to start the server
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+  1. Install dependencies with `mix deps.get`
+  2. Create and migrate your database with `mix ecto.setup`
+  3. Install Node.js dependencies with `npm install` inside the `assets` directory
+  4. Start Phoenix endpoint with `mix phx.server`
+  5. (optional) Execute the tests with `mix test`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser and see the forum!.
