@@ -18,8 +18,11 @@ defmodule ForumWeb.ThreadController do
 
   def create(conn, %{"thread" => thread}) do
     case Forum.create_thread(thread) do
-      {:error, changeset} -> render(conn, "new.html", changeset: changeset)
-      {:ok, _thread} -> redirect_flash_index(conn, "Thread created")
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
+
+      {:ok, thread} ->
+        redirect(conn, to: Routes.thread_path(conn, :show, thread.id))
     end
   end
 
