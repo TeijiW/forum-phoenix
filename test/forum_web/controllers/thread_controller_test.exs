@@ -13,6 +13,11 @@ defmodule ForumWeb.ThreadControllerTest do
     description: nil
   }
 
+  def fixture(:thread) do
+    {:ok, thread} = Forum.create_thread(@create_attrs)
+    thread
+  end
+
   test "GET index", %{conn: conn} do
     conn = get(conn, Routes.thread_path(conn, :index))
     assert html_response(conn, 200) =~ "Threads"
@@ -34,5 +39,21 @@ defmodule ForumWeb.ThreadControllerTest do
       |> html_response(200)
       |> assert() =~ "new thread"
     end
+  end
+
+  describe "Delete thread" do
+    setup [:create_thread]
+
+    test "Delete a thread", %{conn: conn, thread: thread} do
+      conn = delete(conn, Routes.thread_path(conn, :delete, thread))
+      redir_path = redirected_to(conn, 302)
+      conn = get(recycle(conn), redir_path)
+      assert html_response(conn, 200) =~ "deleted"
+    end
+  end
+
+  defp create_thread(_) do
+    thread = fixture(:thread)
+    %{thread: thread}
   end
 end
