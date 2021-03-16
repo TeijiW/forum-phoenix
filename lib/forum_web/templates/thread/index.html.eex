@@ -12,7 +12,6 @@
                 <section class="flex items-center">
                     <span class="font-bold"> <%= thread.comments_count %> replies </span>
                     <%= link "details", to: Routes.thread_path(@conn, :show, thread.id), class: "text-blue-500 hover:text-blue-600 font-bold px-2"%>
-                    <%= link "Delete", to: Routes.thread_path(@conn, :delete, thread), class: " px-2", method: :delete%>
                 </section>
             </li>
         <% end %>
