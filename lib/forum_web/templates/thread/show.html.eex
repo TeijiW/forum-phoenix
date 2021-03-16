@@ -1,6 +1,10 @@
-<section class="flex font-medium">
+<section class="flex font-medium items-center justify-between">
+    <section class="flex">
         <h2 class="text-4xl mr-2"> <%= @thread.title %> #<%= @thread.id %> </h2>
         <span class="text-lg"> - <%= @thread.username %>
+    </section>
+    <%= link "Delete this thread", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 h-8 text-center pt-0.5 mr-4", method: :delete%>
+
 </section>
 <section class="text-gray-600 text-justify font-medium my-4">
     <%= @thread.description %>
