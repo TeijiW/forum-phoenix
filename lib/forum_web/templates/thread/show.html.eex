@@ -1,27 +1,49 @@
-<h1>
-<%= @thread.title %>
-</h1>
-<h2>
-<%= @thread.description %>
-</h2>
+<section class="flex font-medium items-center justify-between">
+    <section class="flex">
+        <h2 class="text-4xl"> <%= @thread.title %> #<%= @thread.id %> </h2>
+        <span class="text-lg"> - <%= @thread.username %>
+    </section>
+    <%= link "< Back to threads list", to: Routes.thread_path(@conn, :index), class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md px-1 h-8 text-center pt-0.5 mr-4", method: :get %>
+</section>
+<section class="text-gray-600 text-justify font-medium my-4">
+    <%= @thread.description %>
+</section>
 
-<ul>
-    <%= for comment <- @thread.comments do %>
-        <li>
-            <%= comment.message %> - <%= comment.username %>
-        </li>
-    <% end %>
-</ul>
+<hr class="border bg-black border-gray-400" />
+
+<%= if length(@thread.comments) > 0 do %>
+<section class="mt-6 mb-4">
+    <h3 class="text-3xl font-bold"> Replies </h3>
+    <ul>
+        <%= for comment <- @thread.comments do %>
+            <li class="flex flex-col my-4">
+                <span class="font-medium"> <%= comment.username %>: </span>
+                <span class="text-gray-500 font-medium"> <%= comment.message %> </span>
+            </li>
+        <% end %>
+    </ul>
+</section>
 
 
-<%= form_for @changeset, Routes.thread_comment_path(@conn, :create, @thread_id), fn f -> %>
-    <div class="form-group">
-        <%= text_input f, :username, placeholder: "Username", class: "form-control" %>
-        <%= error_tag f, :username %>
-
-        <%= text_input f, :message, placeholder: "Message", class: "form-control" %>
-        <%= error_tag f, :message %>
-    </div>
-
-    <%= submit "Save Message", class: "btn" %>
+<% else %>
+    <section class="text-center text-lg my-12"> No replies yet, create one below </section>
 <% end %>
+
+
+<section>
+    <h3 class="text-3xl font-bold mb-2"> Reply: </h3>
+    <%= form_for @changeset, Routes.thread_comment_path(@conn, :create, @thread_id), fn f -> %>
+
+        <section class="flex flex-col my-2">
+            <%= textarea f, :message, placeholder: "Message", class: "border-2 border-gray-700 rounded p-1 h-48" %>
+            <%= custom_error_tag f, :message %>
+        </section>
+        <section class="flex mt-4">
+            <section class="flex flex-col mr-4">
+                <%= text_input f, :username, placeholder: "Username", class: "border-2 border-gray-700 rounded p-1" %>
+                <%= custom_error_tag f, :username %>
+            </section>
+            <%= submit "Send", class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-24 ml-2 mb-4 mt-0 h-8" %>
+        </section>
+    <% end %>
+</section>
