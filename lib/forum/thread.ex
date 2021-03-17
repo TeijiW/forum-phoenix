@@ -8,7 +8,7 @@ defmodule Forum.Thread do
     field :username, :string
     field :title, :string
     field :description, :string
-    has_many(:comments, Comment)
+    has_many(:comments, Comment, foreign_key: :thread_id)
     timestamps()
   end
 
