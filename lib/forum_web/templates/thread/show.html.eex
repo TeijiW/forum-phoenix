@@ -18,8 +18,9 @@
     <ul>
         <%= for comment <- @thread.comments do %>
             <li class="flex flex-col my-4">
-                <span class="font-medium"> <%= comment.username %>: </span>
-                <span class="text-gray-500 font-medium"> <%= comment.message %> </span>
+                <p class="font-medium"> <%= comment.username %>: </p>
+                <p class="text-gray-500 font-medium"> <%= comment.message %> </p>
+                <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
             </li>
         <% end %>
     </ul>
