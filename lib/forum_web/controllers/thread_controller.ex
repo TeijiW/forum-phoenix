@@ -21,7 +21,7 @@ defmodule ForumWeb.ThreadController do
     render(conn, "index.html",
       threads: result.entries,
       total_pages: result.total_pages,
-      current_page: page
+      current_page: result.page_number
     )
   end
 
