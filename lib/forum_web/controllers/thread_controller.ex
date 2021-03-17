@@ -11,9 +11,13 @@ defmodule ForumWeb.ThreadController do
     )
   end
 
-  def index(conn, _params) do
-    threads = Forum.get_threads(%{count_comments: true})
-    render(conn, "index.html", threads: threads)
+  def index(conn, params) do
+    {page, ""} =
+      Map.get(params, "page", "1")
+      |> Integer.parse()
+
+    result = Forum.get_threads(count_comments: true, page: page)
+    render(conn, "index.html", threads: result.entries)
   end
 
   def create(conn, %{"thread" => thread}) do
