@@ -2,13 +2,8 @@ use Mix.Config
 
 # Configure your database
 
-config :forum, Forum.Repo,
-  username: System.get_env("DB_USERNAME"),
-  password: System.get_env("DB_PASSWORD"),
-  database: System.get_env("DB_NAME"),
-  hostname: System.get_env("DB_HOST"),
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# Database config
+import_config "dev.secret.exs"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
