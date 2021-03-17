@@ -10,7 +10,7 @@ defmodule Forum.Thread.Fetch do
 
   def get(id) do
     case Repo.get(Thread, id) do
-      nil -> {:error, "Thread not found!"}
+      nil -> {:error, "Thread ##{id} not found!"}
       thread -> {:ok, thread}
     end
   end

@@ -54,7 +54,7 @@ defmodule ForumWeb.ThreadController do
 
   def delete(conn, %{"id" => thread_id}) do
     case Forum.delete_thread(thread_id) do
-      {:ok, _thread} -> redirect_flash_index(conn, "The thread has been deleted")
+      {:ok, _thread} -> redirect_flash_index(conn, "The thread ##{thread_id} has been deleted")
       {:error, message} -> redirect_flash_index(conn, message, :error)
     end
   end
