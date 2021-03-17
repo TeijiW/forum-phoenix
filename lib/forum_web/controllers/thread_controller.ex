@@ -12,7 +12,7 @@ defmodule ForumWeb.ThreadController do
   end
 
   def index(conn, _params) do
-    threads = Forum.get_threads(:with_comments_count)
+    threads = Forum.get_threads(%{count_comments: true})
     render(conn, "index.html", threads: threads)
   end
 
