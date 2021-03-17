@@ -3,7 +3,7 @@ defmodule Forum.Repo.Migrations.AddUsernameColumnForThread do
 
   def change do
     alter table(:thread) do
-        add :username, :string
+      add :username, :string
     end
   end
 end
