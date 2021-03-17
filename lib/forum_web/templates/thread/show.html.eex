@@ -1,14 +1,14 @@
-<section class="flex font-medium items-center justify-between">
-    <section class="flex">
-        <h2 class="text-4xl mr-2"> <%= @thread.title %> #<%= @thread.id %> </h2>
-        <span class="text-lg"> - <%= @thread.username %>
-    </section>
-    <%= link "Delete this thread", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 h-8 text-center pt-0.5 mr-4", method: :delete%>
-
-</section>
-<section class="text-gray-600 text-justify font-medium my-4">
-    <%= @thread.description %>
-</section>
+<div>
+    <div class="flex font-medium items-top justify-between">
+        <p class="w-4/5 text-4xl pr-4">
+            <%= @thread.title %> #<%= @thread.id %> <span class="text-lg"> - <%= @thread.username %> </span>
+        </p>
+        <%= link "Delete this thread", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center pt-0.5 h-8 w-1/5", method: :delete%>
+    </div>
+    <p class="text-gray-600 text-justify font-medium my-4">
+        <%= @thread.description %>
+    </p>
+</div>
 
 <hr class="border bg-black border-gray-400" />
 
@@ -27,7 +27,7 @@
 
 
 <% else %>
-    <section class="text-center text-lg my-12"> No replies yet, create one below </section>
+    <span class="text-center text-lg my-12"> No replies yet, create one below </span>
 <% end %>
 
 
@@ -35,16 +35,16 @@
     <h3 class="text-2xl font-bold mb-2"> Reply: </h3>
     <%= form_for @changeset, Routes.thread_comment_path(@conn, :create, @thread_id), fn f -> %>
 
-        <section class="flex flex-col my-2">
+        <p class="flex flex-col my-2">
             <%= textarea f, :message, placeholder: "Message", class: "border-2 border-gray-700 rounded p-1 h-24" %>
             <%= custom_error_tag f, :message %>
-        </section>
-        <section class="flex mt-4">
-            <section class="flex flex-col mr-4">
+        </p>
+        <div class="flex mt-4">
+            <p class="flex flex-col mr-4">
                 <%= text_input f, :username, placeholder: "Username", class: "border-2 border-gray-700 rounded p-1" %>
                 <%= custom_error_tag f, :username %>
-            </section>
+            </p>
             <%= submit "Send", class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-24 ml-2 mb-4 mt-0 h-8" %>
-        </section>
+        </div>
     <% end %>
 </section>
