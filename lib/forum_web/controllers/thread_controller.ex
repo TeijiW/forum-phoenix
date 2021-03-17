@@ -17,7 +17,12 @@ defmodule ForumWeb.ThreadController do
       |> Integer.parse()
 
     result = Forum.get_threads(count_comments: true, page: page)
-    render(conn, "index.html", threads: result.entries)
+
+    render(conn, "index.html",
+      threads: result.entries,
+      total_pages: result.total_pages,
+      current_page: page
+    )
   end
 
   def create(conn, %{"thread" => thread}) do

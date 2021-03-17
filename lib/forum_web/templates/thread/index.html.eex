@@ -16,6 +16,20 @@
             </li>
         <% end %>
     </ul>
+    <%= if @total_pages > 0 do %>
+        <footer class="mt-8 flex justify-center text-center text-lg">
+
+            <%= if @current_page > 1, do: link "<", to: Routes.thread_path(@conn, :index, page: @current_page-1) %>
+            <%= for page <- Enum.to_list(1..@total_pages) do %>
+                <%= if page == @current_page do %>
+                    <span class="px-1 font-bold"> <%= page %> </span>
+                <% else %>
+                    <%= link page, to: Routes.thread_path(@conn, :index, page: page), class: "px-1" %>
+                <% end %>
+            <% end %>
+            <%= if @current_page < @total_pages, do: link ">", to: Routes.thread_path(@conn, :index, page: @current_page+1) %>
+        </footer>
+    <% end %>
 <% else %>
     <span class="text-center text-lg mt-12"> No threads have been created yet, create one by clicking on <span class="font-bold"> "new thread" </span> </span>
 <% end %>
