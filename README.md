@@ -5,6 +5,7 @@
 - PostgreSQL
 - Erlang and Elixir
 - Mix
+- Node (because of NPM)
 
 ## Steps to start the server
 
