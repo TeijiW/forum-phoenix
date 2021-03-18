@@ -20,7 +20,7 @@ defmodule ForumWeb.Router do
     get "/thread/new", ThreadController, :new
 
     resources "/thread", ThreadController, only: [:show, :create, :delete] do
-      resources "/", CommentController, only: [:create]
+      resources "/", CommentController, only: [:create, :delete]
     end
   end
 

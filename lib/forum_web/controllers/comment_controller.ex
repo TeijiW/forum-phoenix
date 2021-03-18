@@ -16,6 +16,21 @@ defmodule ForumWeb.CommentController do
     |> handle_form_response(conn, "show.html", thread_id)
   end
 
+  def delete(conn, %{"thread_id" => thread_id, "id" => comment_id}) do
+    case Forum.delete_comment(comment_id) do
+      {:ok, _thread} ->
+        redirect_flash_thread_details(
+          conn,
+          "The comment has been deleted",
+          :info,
+          thread_id
+        )
+
+      {:error, message} ->
+        redirect_flash_thread_details(conn, message, :error, thread_id)
+    end
+  end
+
   defp handle_form_response({:ok, _comment}, conn, _view, thread_id) do
     conn
     |> put_flash(:info, "Comment Added")
@@ -35,4 +50,15 @@ defmodule ForumWeb.CommentController do
       thread_id: thread_id
     )
   end
+
+  defp redirect_flash_thread_details(
+         conn,
+         message,
+         flash_type,
+         thread_id
+       ),
+       do:
+         conn
+         |> put_flash(flash_type, message)
+         |> redirect(to: Routes.thread_path(conn, :show, thread_id))
 end

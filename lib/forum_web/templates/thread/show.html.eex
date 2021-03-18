@@ -24,7 +24,7 @@
                         <p class="text-gray-500 font-medium text-justify break-words"> <%= comment.message %> </p>
                         <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
                     </div>
-                    <%= link "Delete comment", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center text-sm pt-1 h-8 w-1/6 mx-2 opacity-0 group-hover:opacity-100", method: :delete%>
+                    <%= link "Delete comment", to: Routes.thread_comment_path(@conn, :delete, @thread.id, comment.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center text-sm pt-1 h-8 w-1/6 mx-2 opacity-0 group-hover:opacity-100", method: :delete%>
                 </li>
             <% end %>
         </ul>
