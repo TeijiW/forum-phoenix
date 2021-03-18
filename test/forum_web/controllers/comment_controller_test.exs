@@ -17,9 +17,19 @@ defmodule ForumWeb.CommentControllerTest do
     description: "Just a test"
   }
 
+  def fixture(:comment) do
+    {:ok, comment} = Forum.create_comment(Map.merge(@create_attrs, create_thread(nil)))
+    comment
+  end
+
   defp create_thread(_) do
     {:ok, thread} = Forum.create_thread(@create_thread_attrs)
     %{thread_id: thread.id}
+  end
+
+  defp create_comment(_) do
+    comment = fixture(:comment)
+    %{comment: comment}
   end
 
   describe "Create comment" do
@@ -50,6 +60,19 @@ defmodule ForumWeb.CommentControllerTest do
       post(conn, Routes.thread_comment_path(conn, :create, thread_id), comment: comment)
       |> html_response(200)
       |> assert() =~ "blank"
+    end
+  end
+
+  describe "Delete comment" do
+    setup [:create_comment]
+
+    test "Delete a comment", %{conn: conn, comment: comment} do
+      conn =
+        delete(conn, Routes.thread_comment_path(conn, :delete, comment.thread_id, comment.id))
+
+      redir_path = redirected_to(conn, 302)
+      conn = get(recycle(conn), redir_path)
+      assert html_response(conn, 200) =~ "deleted"
     end
   end
 end
