@@ -1,9 +1,8 @@
 import Config
 
 config :forum, Forum.Repo,
+  # Pass the url with all credentials
   url: "ecto://user:password@localhost:5432/forum",
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10,
 
   # Or pass the credentials separately
   username: "user",

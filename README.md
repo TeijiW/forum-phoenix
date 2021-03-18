@@ -1,7 +1,12 @@
 # Forum
 
-Steps to start the server
+## Requirements
 
+- PostgreSQL
+- Erlang and Elixir
+- Mix
+
+## Steps to start the server
 
   1. Please, set database credentials config on `config/dev.secret.exs` file **based** on `config/dev.secret.example.exs` file
   2. Install dependencies with `mix deps.get`
