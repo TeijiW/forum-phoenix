@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Forum - Internal Server Error</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/main.css") %>"/>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <main role="main" class="px-96 mt-8 flex flex-col justify-center">
+    <header>
+        <h1 class="text-6xl text-center">Internal server error</h1>
+    </header>
+        <h2 class="text-3xl text-center mt-8"> Sorry, an Internal server error has occurred </h2>
+        <%= link "Threads list", to: Routes.thread_path(@conn, :index), class: "text-center text-blue-600 font-medium pt-8 text-xl hover:underline", method: :get %>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<section class="flex justify-between w-full mt-4">
+    <h2 class="text-4xl font-bold"> Threads </h2>
+    <%= link "New Thread", to: Routes.thread_path(@conn, :new), class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-32 text-center pt-1 text-lg" %>
+</section>
+
+
+<%= if length(@threads) > 0 do%>
+    <ul class="mt-8">
+        <%= for thread <- @threads do %>
+            <li class="group border-b-2 border-black py-4">
+                <div class="flex justify-between">
+                    <span class="text-2xl font-medium break-words"> <%= thread.title %> </span>
+                    <div class="flex">
+                        <span class="font-bold w-20 text-right"> <%= thread.comments_count %> replies </span>
+                        <%= link "details", to: Routes.thread_path(@conn, :show, thread.id), class: "text-blue-500 hover:text-blue-600 hover:underline font-bold px-2"%>
+                    </div>
+                </div>
+                <p class="text-xs font-medium"> <%= thread.inserted_at %> (UTC)</p>
+            </li>
+        <% end %>
+    </ul>
+    <%= if @total_pages > 0 do %>
+        <footer class="mt-8 flex justify-center text-center text-lg">
+
+            <%= if @current_page > 1, do: link "<", to: Routes.thread_path(@conn, :index, page: @current_page-1) %>
+            <%= for page <- Enum.to_list(1..@total_pages) do %>
+                <%= if page == @current_page do %>
+                    <span class="px-1 font-bold"> <%= page %> </span>
+                <% else %>
+                    <%= link page, to: Routes.thread_path(@conn, :index, page: page), class: "px-1" %>
+                <% end %>
+            <% end %>
+            <%= if @current_page < @total_pages, do: link ">", to: Routes.thread_path(@conn, :index, page: @current_page+1) %>
+        </footer>
+    <% end %>
+<% else %>
+    <span class="text-center text-lg mt-12"> No threads have been created yet, create one by clicking on <span class="font-bold"> "new thread" </span> </span>
+<% end %>

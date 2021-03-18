@@ -1,0 +1,69 @@
+<div>
+    <div class="flex font-medium items-top justify-between">
+        <p class="w-4/5 text-4xl pr-4">
+            <%= @thread.title %> #<%= @thread.id %> <span class="text-lg"> - <%= @thread.username %> </span>
+        </p>
+        <%= link "Delete thread", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center pt-0.5 h-8 w-1/5", method: :delete%>
+    </div>
+    <p class="text-xs font-medium"> <%= @thread.inserted_at %> (UTC)</p>
+    <p class="text-gray-600 text-justify font-medium my-4 break-words">
+        <%= @thread.description %>
+    </p>
+</div>
+
+<hr class="border bg-black border-gray-400" />
+
+<%= if length(@comments) > 0 do %>
+    <section class="mt-6 mb-4">
+        <h3 class="text-3xl font-bold"> Replies </h3>
+        <ul>
+            <%= for comment <- @comments do %>
+                <li class="flex justify-between py-2 hover:bg-gray-200 pl-2 rounded-md group">
+                    <div class="flex flex-col w-5/6">
+                        <p class="font-medium"> <%= comment.username %>: </p>
+                        <p class="text-gray-500 font-medium text-justify break-words"> <%= comment.message %> </p>
+                        <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
+                    </div>
+                    <%= link "Delete comment", to: Routes.thread_comment_path(@conn, :delete, @thread.id, comment.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center text-sm pt-1 h-8 w-1/6 mx-2 opacity-0 group-hover:opacity-100", method: :delete%>
+                </li>
+            <% end %>
+        </ul>
+            <%= if @total_pages > 0 do %>
+        <footer class="mt-8 flex justify-center text-center text-lg">
+
+            <%= if @current_page > 1, do: link "<", to: show_with_page(@conn, @current_page-1, @thread) %>
+            <%= for page <- Enum.to_list(1..@total_pages) do %>
+                <%= if page == @current_page do %>
+                    <span class="px-1 font-bold"> <%= page %> </span>
+                <% else %>
+                    <%= link page, to: show_with_page(@conn, page, @thread), class: "px-1" %>
+                <% end %>
+            <% end %>
+            <%= if @current_page < @total_pages, do: link ">", to: show_with_page(@conn, @current_page+1, @thread) %>
+        </footer>
+    <% end %>
+    </section>
+
+
+<% else %>
+    <span class="text-center text-lg my-12"> No replies yet, create one below </span>
+<% end %>
+
+
+<section>
+    <h3 class="text-2xl font-bold mb-2"> Reply: </h3>
+    <%= form_for @changeset, Routes.thread_comment_path(@conn, :create, @thread_id), fn f -> %>
+
+        <p class="flex flex-col my-2">
+            <%= textarea f, :message, placeholder: "Message", class: "border-2 border-gray-700 rounded p-1 h-24" %>
+            <%= custom_error_tag f, :message %>
+        </p>
+        <div class="flex mt-4">
+            <p class="flex flex-col mr-4">
+                <%= text_input f, :username, placeholder: "Username", class: "border-2 border-gray-700 rounded p-1" %>
+                <%= custom_error_tag f, :username %>
+            </p>
+            <%= submit "Send", class: "bg-gray-300 hover:bg-gray-400 border-2 border-black rounded-md w-24 ml-2 mb-4 mt-0 h-8" %>
+        </div>
+    <% end %>
+</section>
