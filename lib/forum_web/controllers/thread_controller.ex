@@ -1,6 +1,7 @@
 defmodule ForumWeb.ThreadController do
   use ForumWeb, :controller
   alias Forum.{Thread, Comment, Repo}
+  alias ForumWeb.ControllersHelpers
 
   def new(conn, _params) do
     changeset = Thread.changeset(%Thread{}, %{})
@@ -76,5 +77,6 @@ defmodule ForumWeb.ThreadController do
   end
 
   defp redirect_flash_index(conn, message, flash_type \\ :info, path \\ :index),
-    do: conn |> put_flash(flash_type, message) |> redirect(to: Routes.thread_path(conn, path))
+    # do: conn |> put_flash(flash_type, message) |> redirect(to: Routes.thread_path(conn, path))
+    do: ControllersHelpers.redirect_flash(conn, flash_type, message, path, [])
 end

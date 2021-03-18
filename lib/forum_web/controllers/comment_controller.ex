@@ -2,6 +2,7 @@ defmodule ForumWeb.CommentController do
   use ForumWeb, :controller
 
   alias Forum.{Thread, Repo}
+  alias ForumWeb.ControllersHelpers
 
   def create(conn, params) do
     %{"comment" => %{"message" => message, "username" => username}, "thread_id" => thread_id} =
@@ -57,8 +58,5 @@ defmodule ForumWeb.CommentController do
          flash_type,
          thread_id
        ),
-       do:
-         conn
-         |> put_flash(flash_type, message)
-         |> redirect(to: Routes.thread_path(conn, :show, thread_id))
+       do: ControllersHelpers.redirect_flash(conn, flash_type, message, :show, thread_id)
 end
