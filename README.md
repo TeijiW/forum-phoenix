@@ -1,5 +1,7 @@
 # Forum
 
+A forum with threads, at threads you can send comments
+
 ## Requirements
 
 - PostgreSQL
