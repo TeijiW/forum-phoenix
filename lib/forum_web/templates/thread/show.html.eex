@@ -6,7 +6,7 @@
         <%= link "Delete this thread", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center pt-0.5 h-8 w-1/5", method: :delete%>
     </div>
     <p class="text-xs font-medium"> <%= @thread.inserted_at %> (UTC)</p>
-    <p class="text-gray-600 text-justify font-medium my-4">
+    <p class="text-gray-600 text-justify font-medium my-4 break-words">
         <%= @thread.description %>
     </p>
 </div>
@@ -20,7 +20,7 @@
             <%= for comment <- @comments do %>
                 <li class="flex flex-col my-4">
                     <p class="font-medium"> <%= comment.username %>: </p>
-                    <p class="text-gray-500 font-medium"> <%= comment.message %> </p>
+                    <p class="text-gray-500 font-medium text-justify break-words"> <%= comment.message %> </p>
                     <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
                 </li>
             <% end %>
