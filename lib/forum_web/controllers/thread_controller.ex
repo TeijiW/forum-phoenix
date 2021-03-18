@@ -35,21 +35,37 @@ defmodule ForumWeb.ThreadController do
     end
   end
 
-  def show(conn, %{"id" => thread_id}) do
+  def show(conn, params) do
     changeset = Comment.changeset(%{})
+
+    %{"id" => thread_id} = params
+
+    {page, ""} =
+      Map.get(params, "page", "1")
+      |> Integer.parse()
 
     case Forum.fetch_thread(thread_id) do
       {:ok, thread} ->
-        render(conn, "show.html",
-          thread: Repo.preload(thread, :comments),
-          changeset: changeset,
-          thread_id: thread.id,
-          show_thread_list_button: true
-        )
+        handle_show_thread(conn, thread, changeset, page)
 
       {:error, message} ->
         redirect_flash_index(conn, message, :error)
     end
+  end
+
+  defp handle_show_thread(conn, thread, changeset, page) do
+    %{:entries => comments, :total_pages => total_pages, :page_number => current_page} =
+      Forum.get_thread_comments(thread.id, page)
+
+    render(conn, "show.html",
+      thread: thread,
+      comments: comments,
+      total_pages: total_pages,
+      current_page: current_page,
+      changeset: changeset,
+      thread_id: thread.id,
+      show_thread_list_button: true
+    )
   end
 
   def delete(conn, %{"id" => thread_id}) do

@@ -6,5 +6,7 @@ defmodule Forum do
   defdelegate fetch_thread(thread_id), to: Thread.Fetch, as: :call
   defdelegate delete_thread(thread_id), to: Thread.Delete, as: :call
 
+  defdelegate get_thread_comments(thread_id, page \\ 1), to: Thread.Comment.Index, as: :call
+
   defdelegate create_comment(params), to: Comment.Create, as: :call
 end

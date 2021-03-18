@@ -10,4 +10,8 @@ defmodule ForumWeb.ThreadView do
       )
     end)
   end
+
+  def show_with_page(conn, page, thread) do
+    Routes.thread_path(conn, :show, thread.id, page: page)
+  end
 end

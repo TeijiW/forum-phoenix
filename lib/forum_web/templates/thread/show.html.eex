@@ -13,19 +13,33 @@
 
 <hr class="border bg-black border-gray-400" />
 
-<%= if length(@thread.comments) > 0 do %>
-<section class="mt-6 mb-4">
-    <h3 class="text-3xl font-bold"> Replies </h3>
-    <ul>
-        <%= for comment <- @thread.comments do %>
-            <li class="flex flex-col my-4">
-                <p class="font-medium"> <%= comment.username %>: </p>
-                <p class="text-gray-500 font-medium"> <%= comment.message %> </p>
-                <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
-            </li>
-        <% end %>
-    </ul>
-</section>
+<%= if length(@comments) > 0 do %>
+    <section class="mt-6 mb-4">
+        <h3 class="text-3xl font-bold"> Replies </h3>
+        <ul>
+            <%= for comment <- @comments do %>
+                <li class="flex flex-col my-4">
+                    <p class="font-medium"> <%= comment.username %>: </p>
+                    <p class="text-gray-500 font-medium"> <%= comment.message %> </p>
+                    <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
+                </li>
+            <% end %>
+        </ul>
+            <%= if @total_pages > 0 do %>
+        <footer class="mt-8 flex justify-center text-center text-lg">
+
+            <%= if @current_page > 1, do: link "<", to: show_with_page(@conn, @current_page-1, @thread) %>
+            <%= for page <- Enum.to_list(1..@total_pages) do %>
+                <%= if page == @current_page do %>
+                    <span class="px-1 font-bold"> <%= page %> </span>
+                <% else %>
+                    <%= link page, to: show_with_page(@conn, page, @thread), class: "px-1" %>
+                <% end %>
+            <% end %>
+            <%= if @current_page < @total_pages, do: link ">", to: show_with_page(@conn, @current_page+1, @thread) %>
+        </footer>
+    <% end %>
+    </section>
 
 
 <% else %>
