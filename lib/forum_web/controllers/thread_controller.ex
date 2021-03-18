@@ -1,6 +1,6 @@
 defmodule ForumWeb.ThreadController do
   use ForumWeb, :controller
-  alias Forum.{Thread, Comment, Repo}
+  alias Forum.{Thread, Comment}
   alias ForumWeb.ControllersHelpers
 
   def new(conn, _params) do
