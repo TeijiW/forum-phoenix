@@ -3,7 +3,7 @@
         <p class="w-4/5 text-4xl pr-4">
             <%= @thread.title %> #<%= @thread.id %> <span class="text-lg"> - <%= @thread.username %> </span>
         </p>
-        <%= link "Delete this thread", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center pt-0.5 h-8 w-1/5", method: :delete%>
+        <%= link "Delete thread", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center pt-0.5 h-8 w-1/5", method: :delete%>
     </div>
     <p class="text-xs font-medium"> <%= @thread.inserted_at %> (UTC)</p>
     <p class="text-gray-600 text-justify font-medium my-4 break-words">
@@ -18,10 +18,13 @@
         <h3 class="text-3xl font-bold"> Replies </h3>
         <ul>
             <%= for comment <- @comments do %>
-                <li class="flex flex-col my-4">
-                    <p class="font-medium"> <%= comment.username %>: </p>
-                    <p class="text-gray-500 font-medium text-justify break-words"> <%= comment.message %> </p>
-                    <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
+                <li class="flex justify-between py-2 hover:bg-gray-200 pl-2 rounded-md group">
+                    <div class="flex flex-col w-5/6">
+                        <p class="font-medium"> <%= comment.username %>: </p>
+                        <p class="text-gray-500 font-medium text-justify break-words"> <%= comment.message %> </p>
+                        <p class="text-xs font-medium"> <%= comment.inserted_at %> (UTC)</p>
+                    </div>
+                    <%= link "Delete comment", to: Routes.thread_path(@conn, :delete, @thread.id), class: "bg-red-400 hover:bg-red-500 border-2 border-black rounded-md px-1 text-center text-sm pt-1 h-8 w-1/6 mx-2 opacity-0 group-hover:opacity-100", method: :delete%>
                 </li>
             <% end %>
         </ul>
