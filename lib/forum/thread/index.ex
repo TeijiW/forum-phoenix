@@ -8,6 +8,7 @@ defmodule Forum.Thread.Index do
 
     result =
       Thread
+      |> order_by(desc: :inserted_at)
       |> Repo.paginate(page: page)
 
     if count_comments,

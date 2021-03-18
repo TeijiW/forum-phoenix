@@ -7,12 +7,15 @@
 <%= if length(@threads) > 0 do%>
     <ul class="mt-8">
         <%= for thread <- @threads do %>
-            <li class="group border-b-2 border-black py-4 flex justify-between">
-                <span class="text-2xl font-medium break-words"> <%= thread.title %> </span>
-                <div class="flex">
-                    <span class="font-bold w-20 text-right"> <%= thread.comments_count %> replies </span>
-                    <%= link "details", to: Routes.thread_path(@conn, :show, thread.id), class: "text-blue-500 hover:text-blue-600 hover:underline font-bold px-2"%>
+            <li class="group border-b-2 border-black py-4">
+                <div class="flex justify-between">
+                    <span class="text-2xl font-medium break-words"> <%= thread.title %> </span>
+                    <div class="flex">
+                        <span class="font-bold w-20 text-right"> <%= thread.comments_count %> replies </span>
+                        <%= link "details", to: Routes.thread_path(@conn, :show, thread.id), class: "text-blue-500 hover:text-blue-600 hover:underline font-bold px-2"%>
+                    </div>
                 </div>
+                <p class="text-xs font-medium"> <%= thread.inserted_at %> (UTC)</p>
             </li>
         <% end %>
     </ul>
