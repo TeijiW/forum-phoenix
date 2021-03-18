@@ -1,7 +1,7 @@
 defmodule ForumWeb.CommentController do
   use ForumWeb, :controller
 
-  alias Forum.{Thread, Repo}
+  alias Forum.Thread
   alias ForumWeb.ControllersHelpers
 
   def create(conn, params) do
@@ -14,7 +14,7 @@ defmodule ForumWeb.CommentController do
       username: username
     }
     |> Forum.create_comment()
-    |> handle_form_response(conn, "show.html", thread_id)
+    |> handle_form_response(conn, thread_id)
   end
 
   def delete(conn, %{"thread_id" => thread_id, "id" => comment_id}) do
@@ -32,24 +32,18 @@ defmodule ForumWeb.CommentController do
     end
   end
 
-  defp handle_form_response({:ok, _comment}, conn, _view, thread_id) do
+  defp handle_form_response({:ok, _comment}, conn, thread_id) do
     conn
     |> put_flash(:info, "Comment Added")
     |> redirect(to: Routes.thread_path(conn, :show, thread_id))
   end
 
-  defp handle_form_response({:error, comment} = _error, conn, view, thread_id) do
+  defp handle_form_response({:error, comment} = _error, conn, thread_id) do
     {:ok, thread = %Thread{}} =
       thread_id
       |> Forum.fetch_thread()
 
-    conn
-    |> put_view(ForumWeb.ThreadView)
-    |> render(view,
-      changeset: comment,
-      thread: Repo.preload(thread, :comments),
-      thread_id: thread_id
-    )
+    ControllersHelpers.handle_show_thread(conn, thread, comment, 1)
   end
 
   defp redirect_flash_thread_details(

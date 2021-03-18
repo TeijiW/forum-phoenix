@@ -3,6 +3,11 @@ use Mix.Config
 # Configure your database
 
 # Database config
+
+config :forum, Forum.Repo,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 import_config "dev.secret.exs"
 
 # For development, we disable any cache and enable
